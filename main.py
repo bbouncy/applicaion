@@ -8,6 +8,14 @@ import colored as c
 import plotly.graph_objects as go
 import math
 
+
+#[theme]
+primaryColor="#ae6e4e"
+backgroundColor="#e8ded1"
+secondaryBackgroundColor="#bfaa8c"
+textColor="#6b513d"
+
+
 st.set_page_config(layout="wide")
 
 @st.cache
@@ -40,6 +48,12 @@ mask=data["STABBR"].isin(Location)
 data=data[mask]
 
 mask=data["COSTT4_A"]<=Tuition
+data=data[mask]
+
+#mask=data["ADMCON7"]=Testing
+#data=data[mask]
+
+mask=data["HIGHDEG"].isin(DegreeType)
 data=data[mask]
 
 #Accordian#
@@ -86,7 +100,7 @@ for index, row in data.iterrows():
 
         with col2:
             st.markdown('[Webpage](https://{})'.format(row['INSTURL']))
-            st.write("Enrollment Offered:")
+            st.write("Highest Enrollment Offered: {}".format(row["HIGHDEG"]))
 
             if not (math.isnan(row["ADM_RATE_ALL"])):
                 st.write("Admissions Rate: {:.2f}%".format(row["ADM_RATE_ALL"] *100))
